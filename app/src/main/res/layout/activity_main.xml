@@ -40,8 +40,8 @@
     <android.support.design.card.MaterialCardView
         android:id="@+id/foregroundContainer"
         app:layout_behavior="ru.semper_viventem.backdropview.BackdropBehavior"
-        app:cardCornerRadius="10dp"
-        app:contentPadding="10dp"
+        app:cardCornerRadius="@dimen/normal_gap"
+        app:contentPadding="@dimen/normal_gap"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
