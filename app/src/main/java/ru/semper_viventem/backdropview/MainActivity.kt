@@ -1,7 +1,7 @@
 package ru.semper_viventem.backdropview
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -19,6 +19,12 @@ class MainActivity : AppCompatActivity() {
         }
         with(toolbar) {
             setTitle(R.string.app_name)
+        }
+    }
+
+    override fun onBackPressed() {
+        if (!backdropBehavior.close()) {
+            finish()
         }
     }
 }

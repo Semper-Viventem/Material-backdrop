@@ -24,6 +24,7 @@ class BackdropBehavior : CoordinatorLayout.Behavior<CardView> {
     private var toolbarId: Int? = null
     private var backContainerId: Int? = null
 
+    private var child: CardView? = null
     private var toolbar: Toolbar? = null
     private var backContainer: View? = null
 
@@ -48,6 +49,7 @@ class BackdropBehavior : CoordinatorLayout.Behavior<CardView> {
 
     override fun onDependentViewChanged(parent: CoordinatorLayout, child: CardView, dependency: View): Boolean {
 
+        this.child = child
         when (dependency.id) {
             toolbarId -> toolbar = dependency as Toolbar
             backContainerId -> backContainer = dependency
@@ -76,6 +78,30 @@ class BackdropBehavior : CoordinatorLayout.Behavior<CardView> {
         this.backContainerId = backContainerId
     }
 
+    fun open(): Boolean = if (dropState == DropState.OPEN) {
+        false
+    } else {
+        dropState = DropState.OPEN
+        if (child != null && toolbar != null && backContainer != null) {
+            drawDropState(child!!, toolbar!!, backContainer!!)
+        } else {
+            throw IllegalArgumentException("Toolbar and backContainer must be initialized")
+        }
+        true
+    }
+
+    fun close(): Boolean = if (dropState == DropState.CLOSE) {
+        false
+    } else {
+        dropState = DropState.CLOSE
+        if (child != null && toolbar != null && backContainer != null) {
+            drawDropState(child!!, toolbar!!, backContainer!!)
+        } else {
+            throw IllegalArgumentException("Toolbar and backContainer must be initialized")
+        }
+        true
+    }
+
     private fun initViews(child: CardView, toolbar: Toolbar, backContainer: View) {
         backContainer.y = toolbar.y + toolbar.height
         drawDropState(child, toolbar, backContainer)
@@ -94,24 +120,24 @@ class BackdropBehavior : CoordinatorLayout.Behavior<CardView> {
     private fun drawDropState(child: CardView, toolbar: Toolbar, backContainer: View) {
         when (dropState) {
             DropState.CLOSE -> {
-                close(child, backContainer)
+                drawClosedState(child, backContainer)
                 toolbar.setNavigationIcon(closedIconId)
             }
             DropState.OPEN -> {
-                open(child, backContainer)
+                drawOpenedState(child, backContainer)
                 toolbar.setNavigationIcon(openedIconRes)
             }
         }
     }
 
-    private fun close(child: CardView, backContainer: View, withAnimation: Boolean = true) {
+    private fun drawClosedState(child: CardView, backContainer: View, withAnimation: Boolean = true) {
         val position = backContainer.y
         val duration = if (withAnimation) DEFAULT_DURATION else WITHOUT_DURATION
 
         child.animate().y(position).setDuration(duration).start()
     }
 
-    private fun open(child: CardView, backContainer: View, withAnimation: Boolean = true) {
+    private fun drawOpenedState(child: CardView, backContainer: View, withAnimation: Boolean = true) {
         val position = backContainer.y + backContainer.height
         val duration = if (withAnimation) DEFAULT_DURATION else WITHOUT_DURATION
 
