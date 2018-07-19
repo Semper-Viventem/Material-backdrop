@@ -7,8 +7,6 @@ import android.support.v7.widget.CardView
 import android.support.v7.widget.Toolbar
 import android.util.AttributeSet
 import android.view.View
-import android.view.ViewGroup
-import kotlinx.android.synthetic.main.activity_main.view.*
 
 
 class BackdropBehavior : CoordinatorLayout.Behavior<CardView> {
@@ -30,7 +28,7 @@ class BackdropBehavior : CoordinatorLayout.Behavior<CardView> {
     private var backContainer: View? = null
 
     private var closedIconId: Int = R.drawable.ic_menu
-    private var openedIconId: Int = R.drawable.ic_close
+    private var openedIconRes: Int = R.drawable.ic_close
 
     private var dropState: DropState = DropState.CLOSE
 
@@ -62,6 +60,14 @@ class BackdropBehavior : CoordinatorLayout.Behavior<CardView> {
         return super.onDependentViewChanged(parent, child, dependency)
     }
 
+    fun setOpenedIcon(@IdRes iconRes: Int) {
+        this.openedIconRes = iconRes
+    }
+
+    fun setClosedIcon(@IdRes iconRes: Int) {
+        this.closedIconId = iconRes
+    }
+
     fun attacheToolbar(@IdRes toolbarId: Int) {
         this.toolbarId = toolbarId
     }
@@ -72,21 +78,28 @@ class BackdropBehavior : CoordinatorLayout.Behavior<CardView> {
 
     private fun initViews(child: CardView, toolbar: Toolbar, backContainer: View) {
         backContainer.y = toolbar.y + toolbar.height
-        close(child, backContainer, false)
+        drawDropState(child, toolbar, backContainer)
 
         with(toolbar) {
-            setNavigationIcon(closedIconId)
             setNavigationOnClickListener {
-                when(dropState) {
-                    DropState.CLOSE -> {
-                        open(child, backContainer)
-                        setNavigationIcon(openedIconId)
-                    }
-                    DropState.OPEN -> {
-                        close(child, backContainer)
-                        setNavigationIcon(closedIconId)
-                    }
+                dropState = when (dropState) {
+                    DropState.CLOSE -> DropState.OPEN
+                    DropState.OPEN -> DropState.CLOSE
                 }
+                drawDropState(child, toolbar, backContainer)
+            }
+        }
+    }
+
+    private fun drawDropState(child: CardView, toolbar: Toolbar, backContainer: View) {
+        when (dropState) {
+            DropState.CLOSE -> {
+                close(child, backContainer)
+                toolbar.setNavigationIcon(closedIconId)
+            }
+            DropState.OPEN -> {
+                open(child, backContainer)
+                toolbar.setNavigationIcon(openedIconRes)
             }
         }
     }
@@ -96,7 +109,6 @@ class BackdropBehavior : CoordinatorLayout.Behavior<CardView> {
         val duration = if (withAnimation) DEFAULT_DURATION else WITHOUT_DURATION
 
         child.animate().y(position).setDuration(duration).start()
-        dropState = DropState.CLOSE
     }
 
     private fun open(child: CardView, backContainer: View, withAnimation: Boolean = true) {
@@ -104,6 +116,5 @@ class BackdropBehavior : CoordinatorLayout.Behavior<CardView> {
         val duration = if (withAnimation) DEFAULT_DURATION else WITHOUT_DURATION
 
         child.animate().y(position).setDuration(duration).start()
-        dropState = DropState.OPEN
     }
 }
