@@ -153,8 +153,6 @@ class BackdropBehavior : CoordinatorLayout.Behavior<CardView> {
         val duration = if (withAnimation) DEFAULT_DURATION else WITHOUT_DURATION
 
         child.animate().y(position).setDuration(duration).start()
-
-        backContainer.showKeyboard(false)
     }
 
     private fun drawOpenedState(child: CardView, backContainer: View, withAnimation: Boolean = true) {

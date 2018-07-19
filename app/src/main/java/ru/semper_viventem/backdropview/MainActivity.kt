@@ -16,6 +16,14 @@ class MainActivity : AppCompatActivity() {
         with(backdropBehavior) {
             attacheBackContainer(R.id.backContainer)
             attacheToolbar(R.id.toolbar)
+            addOnDropListener(object : BackdropBehavior.OnDropListener {
+                override fun onDrop(dropState: BackdropBehavior.DropState, fromUser: Boolean) {
+                    when (dropState) {
+                        BackdropBehavior.DropState.OPEN -> firstInput.showKeyboard(true)
+                        BackdropBehavior.DropState.CLOSE -> backContainer.showKeyboard(false)
+                    }
+                }
+            })
         }
         with(toolbar) {
             setTitle(R.string.app_name)
