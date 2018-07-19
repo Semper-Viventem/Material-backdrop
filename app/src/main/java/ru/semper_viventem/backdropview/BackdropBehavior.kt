@@ -16,6 +16,11 @@ class BackdropBehavior : CoordinatorLayout.Behavior<CardView> {
         CLOSE
     }
 
+    interface OnDropListener {
+
+        fun onDrop(dropState: DropState, fromUser: Boolean)
+    }
+
     companion object {
         private const val DEFAULT_DURATION = 300L
         private const val WITHOUT_DURATION = 0L
@@ -32,6 +37,8 @@ class BackdropBehavior : CoordinatorLayout.Behavior<CardView> {
     private var openedIconRes: Int = R.drawable.ic_close
 
     private var dropState: DropState = DropState.CLOSE
+
+    private var dropListeners = mutableListOf<OnDropListener>()
 
     constructor() : super()
 
@@ -78,6 +85,14 @@ class BackdropBehavior : CoordinatorLayout.Behavior<CardView> {
         this.backContainerId = backContainerId
     }
 
+    fun addOnDropListener(listener: OnDropListener) {
+        dropListeners.add(listener)
+    }
+
+    fun removeDropListener(listener: OnDropListener) {
+        dropListeners.remove(listener)
+    }
+
     fun open(withAnimation: Boolean = true): Boolean = if (dropState == DropState.OPEN) {
         false
     } else {
@@ -87,6 +102,7 @@ class BackdropBehavior : CoordinatorLayout.Behavior<CardView> {
         } else {
             throw IllegalArgumentException("Toolbar and backContainer must be initialized")
         }
+        notifyListeners(false)
         true
     }
 
@@ -99,6 +115,7 @@ class BackdropBehavior : CoordinatorLayout.Behavior<CardView> {
         } else {
             throw IllegalArgumentException("Toolbar and backContainer must be initialized")
         }
+        notifyListeners(false)
         true
     }
 
@@ -113,6 +130,7 @@ class BackdropBehavior : CoordinatorLayout.Behavior<CardView> {
                     DropState.OPEN -> DropState.CLOSE
                 }
                 drawDropState(child, toolbar, backContainer)
+                notifyListeners(true)
             }
         }
     }
@@ -144,5 +162,11 @@ class BackdropBehavior : CoordinatorLayout.Behavior<CardView> {
         val duration = if (withAnimation) DEFAULT_DURATION else WITHOUT_DURATION
 
         child.animate().y(position).setDuration(duration).start()
+    }
+
+    private fun notifyListeners(fromUser: Boolean) {
+        dropListeners.forEach { listener ->
+            listener.onDrop(dropState, fromUser)
+        }
     }
 }
