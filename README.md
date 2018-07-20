@@ -1,6 +1,6 @@
 # BackdropView
 
-
+[ ![Download](https://api.bintray.com/packages/semper-viventem/maven/backdrop/images/download.svg) ](https://bintray.com/semper-viventem/maven/backdrop/_latestVersion)
 
 ## What is it?
 This library makes it easy to implement a [Backdrop](https://material.io/design/components/backdrop.html) pattern with a CoordinatorLayout
