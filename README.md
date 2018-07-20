@@ -27,7 +27,7 @@ epositories {
 }
 
 dependencies {
-    implementation 'com.github.Semper-Viventem:BackdropView:v0.1.0'
+    implementation 'com.github.Semper-Viventem:BackdropView:0.1.0'
 }
 ```
 
