@@ -6,8 +6,8 @@
 This library makes it easy to implement a [Backdrop](https://material.io/design/components/backdrop.html) pattern with a CoordinatorLayout
 
 
-<img src="/docs/images/Screenshot_20180720-191017.png">
-<img src="/docs/images/Screenshot_20180720-191029.png">
+<img src="/docs/images/Screenshot_20180720-191017.png" width="400">
+<img src="/docs/images/Screenshot_20180720-191029.png" width="400">
 
 
 ## How to use it?
