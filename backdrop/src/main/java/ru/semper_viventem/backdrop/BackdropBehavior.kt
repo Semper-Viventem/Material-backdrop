@@ -1,15 +1,14 @@
-package ru.semper_viventem.backdropview
+package ru.semper_viventem.backdrop
 
 import android.content.Context
 import android.support.annotation.IdRes
 import android.support.design.widget.CoordinatorLayout
-import android.support.v7.widget.CardView
 import android.support.v7.widget.Toolbar
 import android.util.AttributeSet
 import android.view.View
 
 
-class BackdropBehavior : CoordinatorLayout.Behavior<CardView> {
+class BackdropBehavior : CoordinatorLayout.Behavior<View> {
 
     enum class DropState {
         OPEN,
@@ -29,7 +28,7 @@ class BackdropBehavior : CoordinatorLayout.Behavior<CardView> {
     private var toolbarId: Int? = null
     private var backContainerId: Int? = null
 
-    private var child: CardView? = null
+    private var child: View? = null
     private var toolbar: Toolbar? = null
     private var backContainer: View? = null
 
@@ -44,7 +43,7 @@ class BackdropBehavior : CoordinatorLayout.Behavior<CardView> {
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    override fun layoutDependsOn(parent: CoordinatorLayout, child: CardView, dependency: View): Boolean {
+    override fun layoutDependsOn(parent: CoordinatorLayout, child: View, dependency: View): Boolean {
         if (toolbarId == null || backContainerId == null) return false
 
         return when (dependency.id) {
@@ -54,7 +53,7 @@ class BackdropBehavior : CoordinatorLayout.Behavior<CardView> {
         }
     }
 
-    override fun onDependentViewChanged(parent: CoordinatorLayout, child: CardView, dependency: View): Boolean {
+    override fun onDependentViewChanged(parent: CoordinatorLayout, child: View, dependency: View): Boolean {
 
         this.child = child
         when (dependency.id) {
@@ -119,7 +118,7 @@ class BackdropBehavior : CoordinatorLayout.Behavior<CardView> {
         true
     }
 
-    private fun initViews(child: CardView, toolbar: Toolbar, backContainer: View) {
+    private fun initViews(child: View, toolbar: Toolbar, backContainer: View) {
         backContainer.y = toolbar.y + toolbar.height
         drawDropState(child, toolbar, backContainer, false)
 
@@ -135,7 +134,7 @@ class BackdropBehavior : CoordinatorLayout.Behavior<CardView> {
         }
     }
 
-    private fun drawDropState(child: CardView, toolbar: Toolbar, backContainer: View, withAnimation: Boolean = true) {
+    private fun drawDropState(child: View, toolbar: Toolbar, backContainer: View, withAnimation: Boolean = true) {
         when (dropState) {
             DropState.CLOSE -> {
                 drawClosedState(child, backContainer, withAnimation)
@@ -148,14 +147,14 @@ class BackdropBehavior : CoordinatorLayout.Behavior<CardView> {
         }
     }
 
-    private fun drawClosedState(child: CardView, backContainer: View, withAnimation: Boolean = true) {
+    private fun drawClosedState(child: View, backContainer: View, withAnimation: Boolean = true) {
         val position = backContainer.y
         val duration = if (withAnimation) DEFAULT_DURATION else WITHOUT_DURATION
 
         child.animate().y(position).setDuration(duration).start()
     }
 
-    private fun drawOpenedState(child: CardView, backContainer: View, withAnimation: Boolean = true) {
+    private fun drawOpenedState(child: View, backContainer: View, withAnimation: Boolean = true) {
         val position = backContainer.y + backContainer.height
         val duration = if (withAnimation) DEFAULT_DURATION else WITHOUT_DURATION
 
