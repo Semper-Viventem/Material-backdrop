@@ -1,5 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: "com.jfrog.bintray"
 
 ext {
     bintrayRepo = 'maven'
@@ -17,7 +19,7 @@ ext {
     libraryVersion = '0.1.0'
 
     developerId = 'semper-viventem'
-    developerName = 'Constantine'
+    developerName = 'constantine'
     developerEmail = 'kostyaxxx8@gmail.com'
 
     licenseName = 'MIT License'
