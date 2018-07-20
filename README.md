@@ -18,10 +18,11 @@ dependencies {
     implementation 'ru.semper-viventem.backdrop:backdrop:0.1.0'
 }
 ```
+*or*
 
 **JitPack:**
 ```groovy
-epositories {
+repositories {
 	...
 	maven { url 'https://jitpack.io' }
 }
