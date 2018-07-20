@@ -1,6 +1,7 @@
 # Backdrop
 
-[ ![Download](https://api.bintray.com/packages/semper-viventem/maven/backdrop/images/download.svg) ](https://bintray.com/semper-viventem/maven/backdrop/_latestVersion)
+[ ![Download](https://api.bintray.com/packages/semper-viventem/maven/backdrop/images/download.svg) ](https://bintray.com/semper-viventem/maven/backdrop/_latestVersion)[![](https://jitpack.io/v/Semper-Viventem/BackdropView.svg)](https://jitpack.io/#Semper-Viventem/BackdropView)
+
 
 ## What is it?
 This library makes it easy to implement a [Backdrop](https://material.io/design/components/backdrop.html) pattern with a CoordinatorLayout
@@ -9,13 +10,29 @@ This library makes it easy to implement a [Backdrop](https://material.io/design/
 <img src="/docs/images/Screenshot_20180720-191017.png" width="300"> <img src="/docs/images/Screenshot_20180720-191029.png" width="300">
 
 
+## Download
+
+**JCenter (Recommended):**
+```groovy
+dependencies {
+    implementation 'ru.semper-viventem.backdrop:backdrop:0.1.0'
+}
+```
+
+**JitPack:**
+```groovy
+epositories {
+	...
+	maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation 'com.github.Semper-Viventem:BackdropView:v0.1.0'
+}
+```
+
 ## How to use it?
 You need to add a layout Toolbar, back container and foreground container
-
-**Gradle**
-```groovy
-implementation 'ru.semper-viventem.backdrop:backdrop:0.1.0'
-```
 
 Add BackdropBehavior to the Foreground View Container:
 
