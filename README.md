@@ -53,7 +53,10 @@ Add BackdropBehavior to the Foreground View Container:
 </android.support.design.widget.CoordinatorLayout>
 ```
 
-*I used this extension to search for behavior*
+
+**Kotlin**
+
+*I used this extension to search for behavior:*
 ```kotlin
 fun <T : CoordinatorLayout.Behavior<*>> View.findBehavior(): T = layoutParams.run {
     if (this !is CoordinatorLayout.LayoutParams) throw IllegalArgumentException("View's layout params should be CoordinatorLayout.LayoutParams")
@@ -62,8 +65,6 @@ fun <T : CoordinatorLayout.Behavior<*>> View.findBehavior(): T = layoutParams.ru
             ?: throw IllegalArgumentException("Layout's behavior is not current behavior")
 }
 ```
-
-**Kotlin**
 
 ```kotlin
 ...
