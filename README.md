@@ -1,4 +1,4 @@
-# BackdropView
+# Backdrop
 
 [ ![Download](https://api.bintray.com/packages/semper-viventem/maven/backdrop/images/download.svg) ](https://bintray.com/semper-viventem/maven/backdrop/_latestVersion)
 
