@@ -3,6 +3,10 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: "com.jfrog.bintray"
 
+// For JitPack
+group='com.github.Semper-Viventem'
+
+// For JCenter
 ext {
     bintrayRepo = 'maven'
     bintrayName = 'backdrop'
