@@ -1,6 +1,30 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'backdrop'
+    publishedGroupId = 'ru.semper-viventem.backdrop'
+
+    libraryName = 'backdrop'
+    artifact = 'backdrop'
+
+    libraryDescription = 'A simple solution for implementing backdrop for Android'
+
+    siteUrl = 'https://github.com/Semper-Viventem/BackdropView'
+    gitUrl = 'https://github.com/Semper-Viventem/BackdropView'
+
+    libraryVersion = '0.1.0'
+
+    developerId = 'semper-viventem'
+    developerName = 'Constantine'
+    developerEmail = 'kostyaxxx8@gmail.com'
+
+    licenseName = 'MIT License'
+    licenseUrl = 'https://opensource.org/licenses/MIT'
+    allLicenses = ["MIT"]
+}
+
 android {
 
     compileSdkVersion 27
@@ -35,3 +59,6 @@ dependencies {
     // Kotlin
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
