@@ -20,15 +20,19 @@ ext {
     siteUrl = 'https://github.com/Semper-Viventem/BackdropView'
     gitUrl = 'https://github.com/Semper-Viventem/BackdropView'
 
-    libraryVersion = '0.1.0'
+    libraryVersion = '0.1.1'
 
     developerId = 'semper-viventem'
     developerName = 'constantine'
     developerEmail = 'kostyaxxx8@gmail.com'
 
     licenseName = 'MIT License'
-    licenseUrl = 'https://opensource.org/licenses/MIT'
+    licenseUrl = 'https://github.com/Semper-Viventem/BackdropView#license'
     allLicenses = ["MIT"]
+}
+
+subprojects {
+    tasks.withType(Javadoc).all { enabled = false }
 }
 
 android {
