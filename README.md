@@ -18,6 +18,8 @@ You need to add a layout Toolbar, back container and foreground container
 implementation 'ru.semper-viventem.backdrop:backdrop:0.1.0'
 ```
 
+Add BackdropBehavior to the Foreground View Container:
+
 **XML**
 ```xml
 <android.support.design.widget.CoordinatorLayout
@@ -38,6 +40,7 @@ implementation 'ru.semper-viventem.backdrop:backdrop:0.1.0'
         <!-- anything -->
     </LinearLayout>
 
+    <!-- Add BackdropBehavior to this view -->
     <android.support.design.card.MaterialCardView
         android:id="@+id/foregroundContainer"
         app:layout_behavior="ru.semper_viventem.backdrop.BackdropBehavior"
@@ -50,30 +53,38 @@ implementation 'ru.semper-viventem.backdrop:backdrop:0.1.0'
 </android.support.design.widget.CoordinatorLayout>
 ```
 
+*I used this extension to search for behavior*
+```kotlin
+fun <T : CoordinatorLayout.Behavior<*>> View.findBehavior(): T = layoutParams.run {
+    if (this !is CoordinatorLayout.LayoutParams) throw IllegalArgumentException("View's layout params should be CoordinatorLayout.LayoutParams")
+
+    (layoutParams as CoordinatorLayout.LayoutParams).behavior as? T
+            ?: throw IllegalArgumentException("Layout's behavior is not current behavior")
+}
+```
+
 **Kotlin**
 
 ```kotlin
-private lateinit var backdropBehavior: BackdropBehavior
-
 ...
-
-if (foregroundContainer.layoutParams is CoordinatorLayout.LayoutParams) {
-    val behavior = (foregroundContainer.layoutParams as CoordinatorLayout.LayoutParams).behavior
-    if (behavior is BackdropBehavior) {
-                backdropBehavior = behavior
-    }
-}
+val backdropBehavior = foregroundContainer.findBehavior() // find behavior
 
 with(backdropBehavior) {
         attacheBackContainer(R.id.backContainer) // set back container
         attacheToolbar(R.id.toolbar) // set toolbar
         
+        // set navigation icons for toolbar
+        setClosedIcon(R.drawable.ic_menu)
+        setOpenedIcon(R.drawable.ic_close)
+        
         // add listener
         addOnDropListener(object : BackdropBehavior.OnDropListener {
-            // do anyging
+            // TODO: do anyging
         }
     })
 }
+
+...
 ```
 
 
