@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".MainActivity">
+    tools:context=".ui.MainActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -19,46 +19,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/small_gap"
-        android:layout_marginTop="@dimen/small_gap"
+        android:layout_marginStart="@dimen/small_gap"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/firstInput"
+        <android.support.design.widget.NavigationView
+            android:id="@+id/navigationView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/normal_gap"
-            android:layout_marginStart="@dimen/normal_gap"
-            android:hint="@string/first_text"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/normal_gap"
-            android:layout_marginStart="@dimen/normal_gap"
-            android:hint="@string/second_text"/>
+            android:background="@android:color/transparent"
+            app:itemBackground="@drawable/bg_menu_item"
+            app:itemTextColor="@color/white"
+            app:menu="@menu/main_menu"/>
     </LinearLayout>
 
     <FrameLayout
         android:id="@+id/foregroundContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background_top_radius"
+        android:background="@drawable/bg_top_radius"
         android:elevation="4dp"
-        android:focusable="true"
+        android:clickable="true"
         android:paddingEnd="@dimen/normal_gap"
         android:paddingStart="@dimen/normal_gap"
         android:paddingTop="@dimen/foreground_radius"
-        app:layout_behavior="ru.semper_viventem.backdrop.BackdropBehavior">
-
-        <android.support.v4.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/jabberwocky"/>
-        </android.support.v4.widget.NestedScrollView>
-    </FrameLayout>
+        app:layout_behavior="ru.semper_viventem.backdrop.BackdropBehavior"/>
 
 </android.support.design.widget.CoordinatorLayout>
