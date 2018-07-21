@@ -3,58 +3,45 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/backDrop"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".MainActivity">
+    tools:context=".ui.MainActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        app:titleTextColor="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        app:titleTextColor="@color/white"/>
 
     <LinearLayout
         android:id="@+id/backContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/small_gap"
         android:layout_marginEnd="@dimen/small_gap"
+        android:layout_marginStart="@dimen/small_gap"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/firstInput"
+        <android.support.design.widget.NavigationView
+            android:id="@+id/navigationView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/normal_gap"
-            android:layout_marginEnd="@dimen/normal_gap"
-            android:hint="First text"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/normal_gap"
-            android:layout_marginEnd="@dimen/normal_gap"
-            android:hint="Second Text"/>
+            android:background="@android:color/transparent"
+            app:itemBackground="@drawable/bg_menu_item"
+            app:itemTextColor="@color/white"
+            app:menu="@menu/main_menu"/>
     </LinearLayout>
 
-    <android.support.design.card.MaterialCardView
+    <FrameLayout
         android:id="@+id/foregroundContainer"
-        app:layout_behavior="ru.semper_viventem.backdrop.BackdropBehavior"
-        app:cardCornerRadius="@dimen/normal_gap"
-        app:contentPadding="@dimen/normal_gap"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.v4.widget.NestedScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/jabberwocky"/>
-        </android.support.v4.widget.NestedScrollView>
-    </android.support.design.card.MaterialCardView>
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_top_radius"
+        android:clickable="true"
+        android:elevation="4dp"
+        android:focusable="true"
+        android:paddingTop="@dimen/foreground_radius"
+        app:layout_behavior="ru.semper_viventem.backdrop.BackdropBehavior"/>
 
 </android.support.design.widget.CoordinatorLayout>
