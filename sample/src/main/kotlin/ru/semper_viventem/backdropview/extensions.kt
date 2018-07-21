@@ -1,11 +1,21 @@
 package ru.semper_viventem.backdropview
 
 import android.content.Context
+import android.support.annotation.LayoutRes
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.CoordinatorLayout.Behavior
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 
+
+fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false): View {
+    return LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
+}
 
 fun <T : CoordinatorLayout.Behavior<*>> View.findBehavior(): T = layoutParams.run {
     if (this !is CoordinatorLayout.LayoutParams) throw IllegalArgumentException("View's layout params should be CoordinatorLayout.LayoutParams")
@@ -21,4 +31,18 @@ fun View.showKeyboard(show: Boolean) {
     } else {
         imm.hideSoftInputFromWindow(windowToken, 0)
     }
+}
+
+fun ImageView.load(
+    url: String?,
+    round: Boolean = false
+) {
+    Glide.with(context)
+        .load(url)
+        .apply {
+            if (round) {
+                apply(RequestOptions.circleCropTransform())
+            }
+        }
+        .into(this)
 }
