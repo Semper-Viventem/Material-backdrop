@@ -3,7 +3,6 @@ package ru.semper_viventem.backdropview.ui.gallery
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearSnapHelper
-import android.support.v7.widget.SnapHelper
 import android.view.View
 import kotlinx.android.synthetic.main.screen_gallery.view.*
 import ru.semper_viventem.backdropview.R

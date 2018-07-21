@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BackdropView</string>
+    <string name="app_name">Backdrop sample</string>
 
     <string name="jabberwocky">Twas brillig, and the slithy toves
 \nDid gyre and gimble in the wabe:
@@ -36,9 +36,8 @@
 \nAll mimsy were the borogoves,
 \nAnd the mome raths outgrabe.</string>
 
-    <string name="first_text">First text</string>
-    <string name="second_text">Second Text</string>
-    <string name="items_list">Items list</string>
-    <string name="items_gallery">Items gallery</string>
+    <string name="items_list">Screen list</string>
+    <string name="items_gallery">Screen gallery</string>
+    <string name="screen_text">Screen text</string>
 
 </resources>
