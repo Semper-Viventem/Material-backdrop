@@ -14,12 +14,16 @@ import ru.semper_viventem.backdropview.ui.text.TextScreen
 class MainActivity : AppCompatActivity() {
 
     companion object {
-        private val MENU_GALLERY = R.id.menuGallery
-        private val MENU_TEXT = R.id.menuText
-        private val MENU_LIST = R.id.menuList
+        private const val MENU_GALLERY = R.id.menuGallery
+        private const val MENU_TEXT = R.id.menuText
+        private const val MENU_LIST = R.id.menuList
 
-        private val FRAGMENT_CONTAINER = R.id.foregroundContainer
+        private const val FRAGMENT_CONTAINER = R.id.foregroundContainer
+
+        private const val DEFAULT_ITEM = MENU_GALLERY
     }
+
+    private val defaultPage = GalleryScreen()
 
     private lateinit var backdropBehavior: BackdropBehavior
 
@@ -45,6 +49,9 @@ class MainActivity : AppCompatActivity() {
             backdropBehavior.close()
             true
         }
+
+        navigationView.setCheckedItem(DEFAULT_ITEM)
+        showPage(defaultPage)
     }
 
     override fun onBackPressed() {
