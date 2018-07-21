@@ -1,6 +1,7 @@
 package ru.semper_viventem.backdropview.ui
 
 import android.os.Bundle
+import android.support.annotation.IdRes
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -14,6 +15,8 @@ import ru.semper_viventem.backdropview.ui.text.TextScreen
 class MainActivity : AppCompatActivity() {
 
     companion object {
+        private const val ARG_LAST_MENU_ITEM = "last_menu_item"
+
         private const val MENU_GALLERY = R.id.menuGallery
         private const val MENU_TEXT = R.id.menuText
         private const val MENU_LIST = R.id.menuList
@@ -22,8 +25,6 @@ class MainActivity : AppCompatActivity() {
 
         private const val DEFAULT_ITEM = MENU_GALLERY
     }
-
-    private val defaultPage = GalleryScreen()
 
     private lateinit var backdropBehavior: BackdropBehavior
 
@@ -41,22 +42,33 @@ class MainActivity : AppCompatActivity() {
         }
 
         navigationView.setNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                MENU_GALLERY -> showPage(GalleryScreen())
-                MENU_TEXT -> showPage(TextScreen())
-                MENU_LIST -> showPage(ListScreen())
-            }
+            checkMenuPosition(item.itemId)
             backdropBehavior.close()
             true
         }
 
-        navigationView.setCheckedItem(DEFAULT_ITEM)
-        showPage(defaultPage)
+        val currentItem = savedInstanceState?.getInt(ARG_LAST_MENU_ITEM) ?: DEFAULT_ITEM
+        navigationView.setCheckedItem(currentItem)
+        checkMenuPosition(navigationView.checkedItem!!.itemId)
     }
 
     override fun onBackPressed() {
         if (!backdropBehavior.close()) {
             finish()
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putInt(ARG_LAST_MENU_ITEM, navigationView.checkedItem!!.itemId)
+
+        super.onSaveInstanceState(outState)
+    }
+
+    private fun checkMenuPosition(@IdRes menuItemId: Int) {
+        when (menuItemId) {
+            MENU_GALLERY -> showPage(GalleryScreen())
+            MENU_TEXT -> showPage(TextScreen())
+            MENU_LIST -> showPage(ListScreen())
         }
     }
 
