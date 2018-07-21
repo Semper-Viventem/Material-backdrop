@@ -62,7 +62,7 @@ class BackdropBehavior : CoordinatorLayout.Behavior<View> {
         }
 
         if (toolbar != null && backContainer != null) {
-            initViews(child, toolbar!!, backContainer!!)
+            initViews(parent, child, toolbar!!, backContainer!!)
         }
 
         return super.onDependentViewChanged(parent, child, dependency)
@@ -118,8 +118,9 @@ class BackdropBehavior : CoordinatorLayout.Behavior<View> {
         true
     }
 
-    private fun initViews(child: View, toolbar: Toolbar, backContainer: View) {
+    private fun initViews(parent: CoordinatorLayout, child: View, toolbar: Toolbar, backContainer: View) {
         backContainer.y = toolbar.y + toolbar.height
+        child.layoutParams.height = parent.height - toolbar.height
         drawDropState(child, toolbar, backContainer, false)
 
         with(toolbar) {

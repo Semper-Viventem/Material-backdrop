@@ -36,4 +36,7 @@
 \nAll mimsy were the borogoves,
 \nAnd the mome raths outgrabe.</string>
 
+    <string name="first_text">First text</string>
+    <string name="second_text">Second Text</string>
+
 </resources>

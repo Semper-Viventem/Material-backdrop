@@ -2,4 +2,5 @@
 <resources>
     <dimen name="normal_gap">16dp</dimen>
     <dimen name="small_gap">8dp</dimen>
+    <dimen name="foreground_radius">16dp</dimen>
 </resources>
