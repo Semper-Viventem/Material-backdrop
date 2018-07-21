@@ -38,10 +38,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/bg_top_radius"
-        android:elevation="4dp"
         android:clickable="true"
-        android:paddingEnd="@dimen/normal_gap"
-        android:paddingStart="@dimen/normal_gap"
+        android:elevation="4dp"
+        android:focusable="true"
         android:paddingTop="@dimen/foreground_radius"
         app:layout_behavior="ru.semper_viventem.backdrop.BackdropBehavior"/>
 

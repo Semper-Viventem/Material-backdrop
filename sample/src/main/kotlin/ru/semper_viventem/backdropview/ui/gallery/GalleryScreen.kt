@@ -2,7 +2,7 @@ package ru.semper_viventem.backdropview.ui.gallery
 
 import android.view.View
 import ru.semper_viventem.backdropview.R
-import ru.semper_viventem.backdropview.ui.Screen
+import ru.semper_viventem.backdropview.ui.common.Screen
 
 
 class GalleryScreen : Screen() {

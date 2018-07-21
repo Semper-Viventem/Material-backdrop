@@ -1,4 +1,4 @@
-package ru.semper_viventem.backdropview.ui
+package ru.semper_viventem.backdropview.ui.common
 
 import android.content.Context
 import android.os.Bundle
