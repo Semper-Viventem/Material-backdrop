@@ -9,9 +9,9 @@ object ItemsFactory {
                     title = "Item $it",
                     description = "Description of item $it",
                     image = when (0) {
-                        it % 2 -> "http://pixelfans.ru/wp-content/uploads/2016/11/Oboi-Google-Pixel-4-682x1024.jpg"
+                        it % 2 -> "https://phandroid.s3.amazonaws.com/wp-content/uploads/2016/08/nexus-2016-android-wallpaper_image.jpg"
                         it % 3 -> "https://phandroid.s3.amazonaws.com/wp-content/uploads/2015/02/wallpapers_04.jpg"
-                        else -> "https://img.gadgethacks.com/img/original/44/37/63498383131752/0/634983831317524437.jpg"
+                        else -> "https://lh3.googleusercontent.com/-KhxeQPX1Yu0/Vg_43pFC4EI/AAAAAAAAINM/VJM5x_lPh1A/w1800-h1200/1006-ConvertImage%2B%25281%2529.jpg"
                     }
             )
         }

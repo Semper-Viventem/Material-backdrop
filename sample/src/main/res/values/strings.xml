@@ -39,5 +39,6 @@
     <string name="first_text">First text</string>
     <string name="second_text">Second Text</string>
     <string name="items_list">Items list</string>
+    <string name="items_gallery">Items gallery</string>
 
 </resources>

@@ -16,6 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:textSize="16sp"
+        android:textAllCaps="true"
         android:text="@string/items_list"/>
 
     <View
