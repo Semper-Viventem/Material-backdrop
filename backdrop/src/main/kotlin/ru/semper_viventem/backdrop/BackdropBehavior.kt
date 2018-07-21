@@ -1,6 +1,8 @@
 package ru.semper_viventem.backdrop
 
 import android.content.Context
+import android.os.Bundle
+import android.os.Parcelable
 import android.support.annotation.IdRes
 import android.support.design.widget.CoordinatorLayout
 import android.support.v7.widget.Toolbar
@@ -23,6 +25,9 @@ class BackdropBehavior : CoordinatorLayout.Behavior<View> {
     companion object {
         private const val DEFAULT_DURATION = 300L
         private const val WITHOUT_DURATION = 0L
+        private val DEFAULT_DROP_STATE = DropState.CLOSE
+
+        private const val ARG_DROP_STATE = "arg_drop_state"
     }
 
     private var toolbarId: Int? = null
@@ -35,13 +40,25 @@ class BackdropBehavior : CoordinatorLayout.Behavior<View> {
     private var closedIconId: Int = R.drawable.ic_menu
     private var openedIconRes: Int = R.drawable.ic_close
 
-    private var dropState: DropState = DropState.CLOSE
+    private var dropState: DropState = DEFAULT_DROP_STATE
 
     private var dropListeners = mutableListOf<OnDropListener>()
 
     constructor() : super()
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+
+    override fun onSaveInstanceState(parent: CoordinatorLayout?, child: View?): Parcelable {
+        return Bundle().apply {
+            putSerializable(ARG_DROP_STATE, dropState)
+        }
+    }
+
+    override fun onRestoreInstanceState(parent: CoordinatorLayout?, child: View?, state: Parcelable?) {
+        super.onRestoreInstanceState(parent, child, state)
+
+            dropState = (state as? Bundle)?.getSerializable(ARG_DROP_STATE) as? DropState ?: DEFAULT_DROP_STATE
+    }
 
     override fun layoutDependsOn(parent: CoordinatorLayout, child: View, dependency: View): Boolean {
         if (toolbarId == null || backContainerId == null) return false
