@@ -21,10 +21,10 @@ abstract class Screen : Fragment {
         return inflater.inflate(layoutId, container, false)
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        onInitView(view!!)
+        onInitView(view)
     }
 
     abstract fun onInitView(view: View)
