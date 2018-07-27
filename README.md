@@ -14,15 +14,20 @@ This library makes it easy to implement a [Backdrop](https://material.io/design/
 
 
 ## Download
-
 **JCenter (Recommended):**
+
+*For support library:*
 ```groovy
 dependencies {
     implementation 'ru.semper-viventem.backdrop:backdrop:0.1.2'
 }
 ```
-*or*
-
+*For Android X:*
+```groovy
+dependencies {
+    implementation 'ru.semper-viventem.backdrop:backdrop:0.1.2_x'
+}
+```
 **JitPack:**
 ```groovy
 repositories {
@@ -88,7 +93,8 @@ fun <T : CoordinatorLayout.Behavior<*>> View.findBehavior(): T = layoutParams.ru
 
 ```kotlin
 ...
-val backdropBehavior = foregroundContainer.findBehavior() // find behavior
+
+val backdropBehavior: BackdropBehavior = foregroundContainer.findBehavior() // find behavior
 
 with(backdropBehavior) {
         attacheBackContainer(R.id.backContainer) // set back container
@@ -100,9 +106,10 @@ with(backdropBehavior) {
         
         // add listener
         addOnDropListener(object : BackdropBehavior.OnDropListener {
-            // TODO: do anyging
-        }
-    })
+            override fun onDrop(dropState: BackdropBehavior.DropState, fromUser: Boolean) {
+                // TODO: handle listener            
+            }
+        })
 }
 
 ...
