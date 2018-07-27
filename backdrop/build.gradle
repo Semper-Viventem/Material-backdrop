@@ -37,11 +37,11 @@ subprojects {
 
 android {
 
-    compileSdkVersion 27
+    compileSdkVersion 'android-P'
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 27
+        targetSdkVersion 28
     }
 
     buildTypes {
@@ -57,14 +57,14 @@ android {
 }
 
 ext {
-    supportVersion = '27.1.1'
     kotlin_version = '1.2.41'
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation "com.android.support:appcompat-v7:$supportVersion"
+    // Android X
+    implementation "androidx.appcompat:appcompat:1.0.0-beta01"
 
     // Kotlin
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

@@ -1,9 +1,9 @@
 package ru.semper_viventem.backdropview.ui
 
 import android.os.Bundle
-import android.support.annotation.IdRes
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
+import androidx.annotation.IdRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.semper_viventem.backdrop.BackdropBehavior
 import ru.semper_viventem.backdropview.R
