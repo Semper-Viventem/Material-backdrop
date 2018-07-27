@@ -14,16 +14,21 @@ This library makes it easy to implement a [Backdrop](https://material.io/design/
 
 
 ## Download
-
-**JCenter (Recommended):**
+####JCenter (Recommended):
+**For support library:**
 ```groovy
 dependencies {
     implementation 'ru.semper-viventem.backdrop:backdrop:0.1.2'
 }
 ```
+**For Android X:**
+```groovy
+dependencies {
+    implementation 'ru.semper-viventem.backdrop:backdrop:0.1.2_x'
+}
+```
 *or*
-
-**JitPack:**
+####JitPack:
 ```groovy
 repositories {
 	...
@@ -34,6 +39,7 @@ dependencies {
     implementation 'com.github.Semper-Viventem:BackdropView:0.1.2'
 }
 ```
+**Android X:**
 
 ## How to use it?
 You need to add a layout Toolbar, back container and foreground container
@@ -88,7 +94,8 @@ fun <T : CoordinatorLayout.Behavior<*>> View.findBehavior(): T = layoutParams.ru
 
 ```kotlin
 ...
-val backdropBehavior = foregroundContainer.findBehavior() // find behavior
+
+val backdropBehavior: BackdropBehavior = foregroundContainer.findBehavior() // find behavior
 
 with(backdropBehavior) {
         attacheBackContainer(R.id.backContainer) // set back container
@@ -100,9 +107,10 @@ with(backdropBehavior) {
         
         // add listener
         addOnDropListener(object : BackdropBehavior.OnDropListener {
-            // TODO: do anyging
-        }
-    })
+            override fun onDrop(dropState: BackdropBehavior.DropState, fromUser: Boolean) {
+                // TODO: handle listener            
+            }
+        })
 }
 
 ...
