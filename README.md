@@ -14,7 +14,8 @@ This library makes it easy to implement a [Backdrop](https://material.io/design/
 
 
 ## Download
-####JCenter (Recommended):
+###JCenter (Recommended):
+
 **For support library:**
 ```groovy
 dependencies {
@@ -28,7 +29,7 @@ dependencies {
 }
 ```
 *or*
-####JitPack:
+###JitPack:
 ```groovy
 repositories {
 	...
