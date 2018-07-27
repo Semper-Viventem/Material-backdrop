@@ -13,6 +13,6 @@ class TextScreen : Screen() {
 
     override fun onInitView(view: View) {
 
-        view.image.load("http://mariakucherenko.com/wp-content/uploads/2011/08/20110814_%D0%BA%D0%BE%D1%82.jpg")
+        view.image.load("https://habrastorage.org/webt/r9/p8/fi/r9p8figkbszo_cyhdg-6nad4mp0.png")
     }
 }

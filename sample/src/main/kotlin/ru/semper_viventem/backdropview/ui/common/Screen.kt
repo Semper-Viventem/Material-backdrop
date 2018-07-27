@@ -1,6 +1,5 @@
 package ru.semper_viventem.backdropview.ui.common
 
-import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -22,10 +21,10 @@ abstract class Screen : Fragment {
         return inflater.inflate(layoutId, container, false)
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        onInitView(view!!)
+        onInitView(view)
     }
 
     abstract fun onInitView(view: View)
