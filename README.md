@@ -14,22 +14,21 @@ This library makes it easy to implement a [Backdrop](https://material.io/design/
 
 
 ## Download
-###JCenter (Recommended):
+**JCenter (Recommended):**
 
-**For support library:**
+*For support library:*
 ```groovy
 dependencies {
     implementation 'ru.semper-viventem.backdrop:backdrop:0.1.2'
 }
 ```
-**For Android X:**
+*For Android X:*
 ```groovy
 dependencies {
     implementation 'ru.semper-viventem.backdrop:backdrop:0.1.2_x'
 }
 ```
-*or*
-###JitPack:
+**JitPack:**
 ```groovy
 repositories {
 	...
@@ -40,7 +39,6 @@ dependencies {
     implementation 'com.github.Semper-Viventem:BackdropView:0.1.2'
 }
 ```
-**Android X:**
 
 ## How to use it?
 You need to add a layout Toolbar, back container and foreground container
