@@ -4,8 +4,10 @@ import android.os.Bundle
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import kotlinx.android.synthetic.main.activity_main.*
 import ru.semper_viventem.backdrop.BackdropBehavior
 import ru.semper_viventem.backdropview.R
+import ru.semper_viventem.backdropview.findBehavior
 import ru.semper_viventem.backdropview.ui.gallery.GalleryScreen
 import ru.semper_viventem.backdropview.ui.list.ListScreen
 import ru.semper_viventem.backdropview.ui.text.TextScreen
