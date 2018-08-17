@@ -34,8 +34,8 @@ class MainActivity : AppCompatActivity() {
 
         backdropBehavior = foregroundContainer.findBehavior()
         with(backdropBehavior) {
-            attacheBackContainer(R.id.backContainer)
-            attacheToolbar(R.id.toolbar)
+            attachBackContainer(R.id.backContainer)
+            attachToolbar(R.id.toolbar)
         }
         with(toolbar) {
             setTitle(R.string.app_name)
