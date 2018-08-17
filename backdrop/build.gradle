@@ -37,11 +37,11 @@ subprojects {
 
 android {
 
-    compileSdkVersion 27
+    compileSdkVersion 28
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 27
+        targetSdkVersion 28
     }
 
     buildTypes {
@@ -57,8 +57,8 @@ android {
 }
 
 ext {
-    supportVersion = '27.1.1'
-    kotlin_version = '1.2.41'
+    supportVersion = '28.0.0-rc01'
+    kotlin_version = '1.2.50'
 }
 
 dependencies {
