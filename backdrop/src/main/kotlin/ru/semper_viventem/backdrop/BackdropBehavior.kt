@@ -48,13 +48,13 @@ class BackdropBehavior : CoordinatorLayout.Behavior<View> {
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    override fun onSaveInstanceState(parent: CoordinatorLayout?, child: View?): Parcelable {
+    override fun onSaveInstanceState(parent: CoordinatorLayout, child: View): Parcelable {
         return Bundle().apply {
             putSerializable(ARG_DROP_STATE, dropState)
         }
     }
 
-    override fun onRestoreInstanceState(parent: CoordinatorLayout?, child: View?, state: Parcelable?) {
+    override fun onRestoreInstanceState(parent: CoordinatorLayout, child: View, state: Parcelable) {
         super.onRestoreInstanceState(parent, child, state)
 
             dropState = (state as? Bundle)?.getSerializable(ARG_DROP_STATE) as? DropState ?: DEFAULT_DROP_STATE
