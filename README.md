@@ -19,13 +19,13 @@ This library makes it easy to implement a [Backdrop](https://material.io/design/
 *For support library:*
 ```groovy
 dependencies {
-    implementation 'ru.semper-viventem.backdrop:backdrop:0.1.2'
+    implementation 'ru.semper-viventem.backdrop:backdrop:0.1.5'
 }
 ```
 *For Android X:*
 ```groovy
 dependencies {
-    implementation 'ru.semper-viventem.backdrop:backdrop:0.1.2_x'
+    implementation 'ru.semper-viventem.backdrop:backdrop:0.1.5_x'
 }
 ```
 **JitPack:**
