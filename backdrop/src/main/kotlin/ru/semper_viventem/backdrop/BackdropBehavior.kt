@@ -93,11 +93,11 @@ class BackdropBehavior : CoordinatorLayout.Behavior<View> {
         this.closedIconId = iconRes
     }
 
-    fun attacheToolbar(@IdRes toolbarId: Int) {
+    fun attachToolbar(@IdRes toolbarId: Int) {
         this.toolbarId = toolbarId
     }
 
-    fun attacheBackContainer(@IdRes backContainerId: Int) {
+    fun attachBackContainer(@IdRes backContainerId: Int) {
         this.backContainerId = backContainerId
     }
 

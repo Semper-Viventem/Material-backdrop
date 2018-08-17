@@ -35,9 +35,9 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     // Android X
-    implementation "androidx.appcompat:appcompat:1.0.0-beta01"
+    implementation "androidx.appcompat:appcompat:1.0.0-rc01"
     implementation "androidx.constraintlayout:constraintlayout:1.1.2"
-    implementation "com.google.android.material:material:1.0.0-beta01"
+    implementation "com.google.android.material:material:1.0.0-rc01"
 
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

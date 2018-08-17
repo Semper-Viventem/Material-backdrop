@@ -97,8 +97,8 @@ fun <T : CoordinatorLayout.Behavior<*>> View.findBehavior(): T = layoutParams.ru
 val backdropBehavior: BackdropBehavior = foregroundContainer.findBehavior() // find behavior
 
 with(backdropBehavior) {
-        attacheBackContainer(R.id.backContainer) // set back container
-        attacheToolbar(R.id.toolbar) // set toolbar
+        attachBackContainer(R.id.backContainer) // set back container
+        attachToolbar(R.id.toolbar) // set toolbar
         
         // set navigation icons for toolbar
         setClosedIcon(R.drawable.ic_menu)

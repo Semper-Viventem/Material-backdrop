@@ -4,10 +4,8 @@ import android.os.Bundle
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.activity_main.*
 import ru.semper_viventem.backdrop.BackdropBehavior
 import ru.semper_viventem.backdropview.R
-import ru.semper_viventem.backdropview.findBehavior
 import ru.semper_viventem.backdropview.ui.gallery.GalleryScreen
 import ru.semper_viventem.backdropview.ui.list.ListScreen
 import ru.semper_viventem.backdropview.ui.text.TextScreen
@@ -34,8 +32,8 @@ class MainActivity : AppCompatActivity() {
 
         backdropBehavior = foregroundContainer.findBehavior()
         with(backdropBehavior) {
-            attacheBackContainer(R.id.backContainer)
-            attacheToolbar(R.id.toolbar)
+            attachBackContainer(R.id.backContainer)
+            attachToolbar(R.id.toolbar)
         }
         with(toolbar) {
             setTitle(R.string.app_name)

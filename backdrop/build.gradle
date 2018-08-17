@@ -20,7 +20,7 @@ ext {
     siteUrl = 'https://github.com/Semper-Viventem/BackdropView'
     gitUrl = 'https://github.com/Semper-Viventem/BackdropView'
 
-    libraryVersion = '0.1.2_x'
+    libraryVersion = '0.1.3_x'
 
     developerId = 'semper-viventem'
     developerName = 'constantine'
@@ -64,7 +64,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // Android X
-    implementation "androidx.appcompat:appcompat:1.0.0-beta01"
+    implementation "androidx.appcompat:appcompat:1.0.0-rc01"
 
     // Kotlin
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
