@@ -66,7 +66,7 @@ class BackdropBehavior : CoordinatorLayout.Behavior<View> {
     }
 
     override fun layoutDependsOn(parent: CoordinatorLayout, child: View, dependency: View): Boolean {
-        if (toolbarId == null || backLayoutId == null) return false
+        if (toolbarId == null && backLayoutId == null) return false
 
         return when (dependency.id) {
             toolbarId -> true
@@ -171,9 +171,6 @@ class BackdropBehavior : CoordinatorLayout.Behavior<View> {
         // TODO (next release): remove this block
         if (toolbarId != null) {
             backLayout.y = toolbar.y + toolbar.height
-            frontLayout.layoutParams.height = parent.height - toolbar.height
-        } else {
-            frontLayout.layoutParams.height = parent.height - (backLayout.y.toInt() + toolbar.y.toInt() + toolbar.height)
         }
 
         drawDropState(frontLayout, toolbar, backLayout, false)
