@@ -45,6 +45,8 @@ class BackdropBehavior : CoordinatorLayout.Behavior<View> {
 
     private var dropState: DropState = DEFAULT_DROP_STATE
 
+    private var needToInitializing = true
+
     private var dropListeners = mutableListOf<OnDropListener>()
 
     constructor() : super()
@@ -91,7 +93,7 @@ class BackdropBehavior : CoordinatorLayout.Behavior<View> {
             }
         }
 
-        if (toolbar != null && frontLayout != null && backLayout != null) {
+        if (toolbar != null && frontLayout != null && backLayout != null && needToInitializing) {
             initViews(parent, frontLayout!!, toolbar!!, backLayout!!)
         }
 
@@ -142,7 +144,7 @@ class BackdropBehavior : CoordinatorLayout.Behavior<View> {
     } else {
         dropState = DropState.OPEN
         if (backLayout != null && toolbar != null && frontLayout != null) {
-            drawDropState(backLayout!!, toolbar!!, frontLayout!!, withAnimation)
+            drawDropState(frontLayout!!, toolbar!!, backLayout!!, withAnimation)
         } else {
             throw IllegalArgumentException("Toolbar and backContainer must be initialized")
         }
@@ -155,7 +157,7 @@ class BackdropBehavior : CoordinatorLayout.Behavior<View> {
     } else {
         dropState = DropState.CLOSE
         if (backLayout != null && toolbar != null && frontLayout != null) {
-            drawDropState(backLayout!!, toolbar!!, frontLayout!!, withAnimation)
+            drawDropState(frontLayout!!, toolbar!!, backLayout!!, withAnimation)
         } else {
             throw IllegalArgumentException("Toolbar and backContainer must be initialized")
         }
@@ -165,12 +167,14 @@ class BackdropBehavior : CoordinatorLayout.Behavior<View> {
 
     private fun initViews(parent: CoordinatorLayout, frontLayout: View, toolbar: Toolbar, backLayout: View) {
 
-        // TODO (next release): remove this conditional
+        // TODO (next release): remove this block
         if (toolbarId != null) {
             backLayout.y = toolbar.y + toolbar.height
+            frontLayout.layoutParams.height = parent.height - toolbar.height
+        } else {
+            frontLayout.layoutParams.height = parent.height - (backLayout.y.toInt() + toolbar.y.toInt() + toolbar.height)
         }
 
-        frontLayout.layoutParams.height = parent.height - (toolbar.y.toInt() + toolbar.height)
         drawDropState(frontLayout, toolbar, backLayout, false)
 
         with(toolbar) {
@@ -183,33 +187,48 @@ class BackdropBehavior : CoordinatorLayout.Behavior<View> {
                 notifyListeners(true)
             }
         }
+
+        needToInitializing = false
     }
 
-    private fun drawDropState(child: View, toolbar: Toolbar, backContainer: View, withAnimation: Boolean = true) {
+    private fun drawDropState(frontLayout: View, toolbar: Toolbar, backContainer: View, withAnimation: Boolean = true) {
         when (dropState) {
             DropState.CLOSE -> {
-                drawClosedState(child, backContainer, withAnimation)
+                drawClosedState(frontLayout, backContainer, toolbar, withAnimation)
                 toolbar.setNavigationIcon(closedIconId)
             }
             DropState.OPEN -> {
-                drawOpenedState(child, backContainer, withAnimation)
+                drawOpenedState(frontLayout, backContainer, withAnimation)
                 toolbar.setNavigationIcon(openedIconRes)
             }
         }
     }
 
-    private fun drawClosedState(child: View, backContainer: View, withAnimation: Boolean = true) {
-        val position = backContainer.y
+    private fun drawClosedState(frontLayout: View, backLayout: View, toolbar: Toolbar, withAnimation: Boolean = true) {
+        val position = calculateTopPosition(backLayout, toolbar)
         val duration = if (withAnimation) DEFAULT_DURATION else WITHOUT_DURATION
 
-        child.animate().y(position).setDuration(duration).start()
+        frontLayout.animate().y(position).setDuration(duration).start()
     }
 
-    private fun drawOpenedState(child: View, backContainer: View, withAnimation: Boolean = true) {
-        val position = backContainer.y + backContainer.height
+    private fun drawOpenedState(frontLayout: View, backLayout: View, withAnimation: Boolean = true) {
+        val position = calculateBottomPosition(backLayout)
         val duration = if (withAnimation) DEFAULT_DURATION else WITHOUT_DURATION
 
-        child.animate().y(position).setDuration(duration).start()
+        frontLayout.animate().y(position).setDuration(duration).start()
+    }
+
+    private fun calculateTopPosition(backLayout: View, toolbar: Toolbar): Float {
+        // TODO (next release): remove this block
+        return if (toolbarId != null) {
+            backLayout.y
+        } else {
+            (backLayout.y + toolbar.y + toolbar.height)
+        }
+    }
+
+    private fun calculateBottomPosition(backLayout: View): Float {
+        return backLayout.y + backLayout.height
     }
 
     private fun notifyListeners(fromUser: Boolean) {

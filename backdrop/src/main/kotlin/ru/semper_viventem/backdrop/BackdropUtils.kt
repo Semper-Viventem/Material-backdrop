@@ -3,7 +3,7 @@ package ru.semper_viventem.backdrop
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 
-class BackdropUtils {
+internal class BackdropUtils {
 
     fun findToolbar(viewGroup: ViewGroup): Toolbar? {
         for (chileId in 0..viewGroup.childCount) {
