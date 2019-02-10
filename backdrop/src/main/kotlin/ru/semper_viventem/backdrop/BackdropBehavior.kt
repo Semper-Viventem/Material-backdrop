@@ -3,11 +3,12 @@ package ru.semper_viventem.backdrop
 import android.content.Context
 import android.os.Bundle
 import android.os.Parcelable
-import android.support.annotation.IdRes
-import android.support.design.widget.CoordinatorLayout
-import android.support.v7.widget.Toolbar
 import android.util.AttributeSet
 import android.view.View
+import android.view.ViewGroup
+import androidx.annotation.IdRes
+import androidx.appcompat.widget.Toolbar
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 
 
 class BackdropBehavior : CoordinatorLayout.Behavior<View> {
@@ -30,17 +31,21 @@ class BackdropBehavior : CoordinatorLayout.Behavior<View> {
         private const val ARG_DROP_STATE = "arg_drop_state"
     }
 
-    private var toolbarId: Int? = null
-    private var backContainerId: Int? = null
+    private var utils = BackdropUtils()
 
-    private var child: View? = null
+    private var toolbarId: Int? = null
+    private var backLayoutId: Int? = null
+
     private var toolbar: Toolbar? = null
-    private var backContainer: View? = null
+    private var backLayout: ViewGroup? = null
+    private var frontLayout: View? = null
 
     private var closedIconId: Int = R.drawable.ic_menu
     private var openedIconRes: Int = R.drawable.ic_close
 
     private var dropState: DropState = DEFAULT_DROP_STATE
+
+    private var needToInitializing = true
 
     private var dropListeners = mutableListOf<OnDropListener>()
 
@@ -61,25 +66,35 @@ class BackdropBehavior : CoordinatorLayout.Behavior<View> {
     }
 
     override fun layoutDependsOn(parent: CoordinatorLayout, child: View, dependency: View): Boolean {
-        if (toolbarId == null || backContainerId == null) return false
+        if (toolbarId == null && backLayoutId == null) return false
 
         return when (dependency.id) {
             toolbarId -> true
-            backContainerId -> true
+            backLayoutId -> true
             else -> false
         }
     }
 
     override fun onDependentViewChanged(parent: CoordinatorLayout, child: View, dependency: View): Boolean {
 
-        this.child = child
+        this.frontLayout = child as? ViewGroup ?: throw IllegalArgumentException("BackLayout must extend a ViewGroup")
+
         when (dependency.id) {
-            toolbarId -> toolbar = dependency as Toolbar
-            backContainerId -> backContainer = dependency
+            toolbarId -> toolbar = dependency as? Toolbar ?: throw IllegalArgumentException("toolbarId doesn't match Toolbar")
+
+            backLayoutId -> {
+                backLayout = dependency as? ViewGroup ?: throw IllegalArgumentException("backLayoutId doesn't match back Layout")
+
+                // TODO (next release): remove this conditional
+                if (toolbarId == null) {
+                    toolbar = utils.findToolbar(backLayout!!)
+                            ?: throw IllegalArgumentException("AppBarLayout mast contain a Toolbar!")
+                }
+            }
         }
 
-        if (toolbar != null && backContainer != null) {
-            initViews(parent, child, toolbar!!, backContainer!!)
+        if (toolbar != null && frontLayout != null && backLayout != null && needToInitializing) {
+            initViews(parent, frontLayout!!, toolbar!!, backLayout!!)
         }
 
         return super.onDependentViewChanged(parent, child, dependency)
@@ -93,12 +108,28 @@ class BackdropBehavior : CoordinatorLayout.Behavior<View> {
         this.closedIconId = iconRes
     }
 
+    /**
+     * Attach back layout to Backdrop.
+     * BackDropLayout must contain a [Toolbar]
+     */
+    fun attachBackLayout(@IdRes appBarLayoutId: Int) {
+        this.backLayoutId = appBarLayoutId
+    }
+
+    /**
+     * @deprecated — use [BackdropBehavior.attachBackLayout]. This method will be removed in version 0.1.7+
+     */
+    @Deprecated("Use BackdropBehavior.attachBackLayout")
     fun attachToolbar(@IdRes toolbarId: Int) {
         this.toolbarId = toolbarId
     }
 
+    /**
+     * @deprecated — use [BackdropBehavior.attachBackLayout]. This method will be removed in version 0.1.7+
+     */
+    @Deprecated("Use BackdropBehavior.attachBackLayout")
     fun attachBackContainer(@IdRes backContainerId: Int) {
-        this.backContainerId = backContainerId
+        this.backLayoutId = backContainerId
     }
 
     fun addOnDropListener(listener: OnDropListener) {
@@ -113,8 +144,8 @@ class BackdropBehavior : CoordinatorLayout.Behavior<View> {
         false
     } else {
         dropState = DropState.OPEN
-        if (child != null && toolbar != null && backContainer != null) {
-            drawDropState(child!!, toolbar!!, backContainer!!, withAnimation)
+        if (backLayout != null && toolbar != null && frontLayout != null) {
+            drawDropState(frontLayout!!, toolbar!!, backLayout!!, withAnimation)
         } else {
             throw IllegalArgumentException("Toolbar and backContainer must be initialized")
         }
@@ -126,8 +157,8 @@ class BackdropBehavior : CoordinatorLayout.Behavior<View> {
         false
     } else {
         dropState = DropState.CLOSE
-        if (child != null && toolbar != null && backContainer != null) {
-            drawDropState(child!!, toolbar!!, backContainer!!, withAnimation)
+        if (backLayout != null && toolbar != null && frontLayout != null) {
+            drawDropState(frontLayout!!, toolbar!!, backLayout!!, withAnimation)
         } else {
             throw IllegalArgumentException("Toolbar and backContainer must be initialized")
         }
@@ -135,10 +166,15 @@ class BackdropBehavior : CoordinatorLayout.Behavior<View> {
         true
     }
 
-    private fun initViews(parent: CoordinatorLayout, child: View, toolbar: Toolbar, backContainer: View) {
-        backContainer.y = toolbar.y + toolbar.height
-        child.layoutParams.height = parent.height - toolbar.height
-        drawDropState(child, toolbar, backContainer, false)
+    private fun initViews(parent: CoordinatorLayout, frontLayout: View, toolbar: Toolbar, backLayout: View) {
+
+        // TODO (next release): remove this block
+        if (toolbarId != null) {
+            backLayout.y = toolbar.y + toolbar.height
+        }
+
+        frontLayout.layoutParams.height = parent.height - calculateTopPosition(backLayout, toolbar).toInt()
+        drawDropState(frontLayout, toolbar, backLayout, false)
 
         with(toolbar) {
             setNavigationOnClickListener {
@@ -146,37 +182,52 @@ class BackdropBehavior : CoordinatorLayout.Behavior<View> {
                     DropState.CLOSE -> DropState.OPEN
                     DropState.OPEN -> DropState.CLOSE
                 }
-                drawDropState(child, toolbar, backContainer)
+                drawDropState(frontLayout, toolbar, backLayout)
                 notifyListeners(true)
             }
         }
+
+        needToInitializing = false
     }
 
-    private fun drawDropState(child: View, toolbar: Toolbar, backContainer: View, withAnimation: Boolean = true) {
+    private fun drawDropState(frontLayout: View, toolbar: Toolbar, backContainer: View, withAnimation: Boolean = true) {
         when (dropState) {
             DropState.CLOSE -> {
-                drawClosedState(child, backContainer, withAnimation)
+                drawClosedState(frontLayout, backContainer, toolbar, withAnimation)
                 toolbar.setNavigationIcon(closedIconId)
             }
             DropState.OPEN -> {
-                drawOpenedState(child, backContainer, withAnimation)
+                drawOpenedState(frontLayout, backContainer, withAnimation)
                 toolbar.setNavigationIcon(openedIconRes)
             }
         }
     }
 
-    private fun drawClosedState(child: View, backContainer: View, withAnimation: Boolean = true) {
-        val position = backContainer.y
+    private fun drawClosedState(frontLayout: View, backLayout: View, toolbar: Toolbar, withAnimation: Boolean = true) {
+        val position = calculateTopPosition(backLayout, toolbar)
         val duration = if (withAnimation) DEFAULT_DURATION else WITHOUT_DURATION
 
-        child.animate().y(position).setDuration(duration).start()
+        frontLayout.animate().y(position).setDuration(duration).start()
     }
 
-    private fun drawOpenedState(child: View, backContainer: View, withAnimation: Boolean = true) {
-        val position = backContainer.y + backContainer.height
+    private fun drawOpenedState(frontLayout: View, backLayout: View, withAnimation: Boolean = true) {
+        val position = calculateBottomPosition(backLayout)
         val duration = if (withAnimation) DEFAULT_DURATION else WITHOUT_DURATION
 
-        child.animate().y(position).setDuration(duration).start()
+        frontLayout.animate().y(position).setDuration(duration).start()
+    }
+
+    private fun calculateTopPosition(backLayout: View, toolbar: Toolbar): Float {
+        // TODO (next release): remove this block
+        return if (toolbarId != null) {
+            backLayout.y
+        } else {
+            (backLayout.y + toolbar.y + toolbar.height)
+        }
+    }
+
+    private fun calculateBottomPosition(backLayout: View): Float {
+        return backLayout.y + backLayout.height
     }
 
     private fun notifyListeners(fromUser: Boolean) {
