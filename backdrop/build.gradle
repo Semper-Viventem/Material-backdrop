@@ -20,7 +20,7 @@ ext {
     siteUrl = 'https://github.com/Semper-Viventem/BackdropView'
     gitUrl = 'https://github.com/Semper-Viventem/BackdropView'
 
-    libraryVersion = '0.1.3'
+    libraryVersion = '0.1.5'
 
     developerId = 'semper-viventem'
     developerName = 'constantine'
