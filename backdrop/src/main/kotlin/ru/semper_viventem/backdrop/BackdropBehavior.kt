@@ -119,6 +119,7 @@ class BackdropBehavior : CoordinatorLayout.Behavior<View> {
     /**
      * @deprecated — use [BackdropBehavior.attachBackLayout]. This method will be removed in version 0.1.7+
      */
+    @Deprecated("Use BackdropBehavior.attachBackLayout")
     fun attachToolbar(@IdRes toolbarId: Int) {
         this.toolbarId = toolbarId
     }
