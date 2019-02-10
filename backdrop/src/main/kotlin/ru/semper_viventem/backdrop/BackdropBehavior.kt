@@ -173,6 +173,7 @@ class BackdropBehavior : CoordinatorLayout.Behavior<View> {
             backLayout.y = toolbar.y + toolbar.height
         }
 
+        frontLayout.layoutParams.height = parent.height - calculateTopPosition(backLayout, toolbar).toInt()
         drawDropState(frontLayout, toolbar, backLayout, false)
 
         with(toolbar) {
