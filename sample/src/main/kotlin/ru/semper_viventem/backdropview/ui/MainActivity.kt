@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         private const val MENU_TEXT = R.id.menuText
         private const val MENU_LIST = R.id.menuList
 
-        private const val FRAGMENT_CONTAINER = R.id.foregroundContainer
+        private const val FRAGMENT_CONTAINER = R.id.frontLayout
 
         private const val DEFAULT_ITEM = MENU_GALLERY
     }
@@ -32,9 +32,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        backdropBehavior = foregroundContainer.findBehavior()
+        backdropBehavior = frontLayout.findBehavior()
         with(backdropBehavior) {
-            attachBackLayout(R.id.backContainer)
+            attachBackLayout(R.id.backLayout)
         }
         with(toolbar) {
             setTitle(R.string.app_name)
