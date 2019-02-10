@@ -1,9 +1,9 @@
 package ru.semper_viventem.backdropview.ui
 
 import android.os.Bundle
-import android.support.annotation.IdRes
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
+import androidx.annotation.IdRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.semper_viventem.backdrop.BackdropBehavior
 import ru.semper_viventem.backdropview.R
@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         private const val MENU_TEXT = R.id.menuText
         private const val MENU_LIST = R.id.menuList
 
-        private const val FRAGMENT_CONTAINER = R.id.foregroundContainer
+        private const val FRAGMENT_CONTAINER = R.id.frontLayout
 
         private const val DEFAULT_ITEM = MENU_GALLERY
     }
@@ -32,10 +32,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        backdropBehavior = foregroundContainer.findBehavior()
+        backdropBehavior = frontLayout.findBehavior()
         with(backdropBehavior) {
-            attachBackContainer(R.id.backContainer)
-            attachToolbar(R.id.toolbar)
+            attachBackLayout(R.id.backLayout)
         }
         with(toolbar) {
             setTitle(R.string.app_name)

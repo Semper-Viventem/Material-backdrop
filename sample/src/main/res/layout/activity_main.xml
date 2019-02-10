@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,32 +9,32 @@
     android:background="@color/colorPrimary"
     tools:context=".ui.MainActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/backLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:titleTextColor="@color/white"/>
-
-    <LinearLayout
-        android:id="@+id/backContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/small_gap"
-        android:layout_marginStart="@dimen/small_gap"
         android:orientation="vertical">
 
-        <android.support.design.widget.NavigationView
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:titleTextColor="@color/white"/>
+
+        <com.google.android.material.navigation.NavigationView
             android:id="@+id/navigationView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="@dimen/small_gap"
+            android:paddingEnd="@dimen/small_gap"
             android:background="@android:color/transparent"
             app:itemBackground="@drawable/bg_menu_item"
             app:itemTextColor="@color/white"
             app:menu="@menu/main_menu"/>
-    </LinearLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout
-        android:id="@+id/foregroundContainer"
+        android:id="@+id/frontLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/bg_top_radius"
@@ -44,4 +44,4 @@
         android:paddingTop="@dimen/foreground_radius"
         app:layout_behavior="ru.semper_viventem.backdrop.BackdropBehavior"/>
 
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

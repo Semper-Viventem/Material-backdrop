@@ -1,7 +1,7 @@
 package ru.semper_viventem.backdropview.ui.list
 
-import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.screen_list.view.*
 import ru.semper_viventem.backdropview.R
 import ru.semper_viventem.backdropview.ui.common.Screen

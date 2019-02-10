@@ -1,16 +1,14 @@
 package ru.semper_viventem.backdropview
 
 import android.content.Context
-import android.support.annotation.LayoutRes
-import android.support.design.widget.CoordinatorLayout
-import android.support.design.widget.CoordinatorLayout.Behavior
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
+import androidx.annotation.LayoutRes
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 
 
 fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false): View {
@@ -34,15 +32,9 @@ fun View.showKeyboard(show: Boolean) {
 }
 
 fun ImageView.load(
-    url: String?,
-    round: Boolean = false
+    url: String?
 ) {
-    Glide.with(context)
+    Glide.with(this)
         .load(url)
-        .apply {
-            if (round) {
-                apply(RequestOptions.circleCropTransform())
-            }
-        }
         .into(this)
 }
