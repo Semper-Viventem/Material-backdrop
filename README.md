@@ -15,19 +15,12 @@ This library makes it easy to implement a [Backdrop](https://material.io/design/
 
 ## Download
 **JCenter (Recommended):**
+```groovy
+dependencies {
+    implementation 'ru.semper-viventem.backdrop:backdrop:0.1.6'
+}
+```
 
-*For support library:*
-```groovy
-dependencies {
-    implementation 'ru.semper-viventem.backdrop:backdrop:0.1.5'
-}
-```
-*For Android X:*
-```groovy
-dependencies {
-    implementation 'ru.semper-viventem.backdrop:backdrop:0.1.5_x'
-}
-```
 **JitPack:**
 ```groovy
 repositories {
@@ -36,34 +29,41 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.Semper-Viventem:BackdropView:0.1.5'
+    implementation 'com.github.Semper-Viventem:BackdropView:0.1.6'
 }
 ```
 
 ## How to use it?
-You need to add a layout Toolbar, back container and foreground container
+You need to add front layout and back layout (with toolbar) to CoordinatorLayout.
 
-Add BackdropBehavior to the Foreground View Container:
+Add BackdropBehavior to your front layout:
 
 **XML**
 ```xml
 <android.support.design.widget.CoordinatorLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <LinearLayout
-        android:id="@+id/backContainer"
+    
+    <!-- BackLayout for BackDrop -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/backLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        
-        <!-- anything -->
-    </LinearLayout>
+
+        <!-- Must contain a Toolbar -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <!-- For example, NavigationView. Or you can use anything -->
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/navigationView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:menu="@menu/main_menu"/>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <!-- Add BackdropBehavior to this view -->
     <android.support.design.card.MaterialCardView
@@ -72,7 +72,7 @@ Add BackdropBehavior to the Foreground View Container:
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         
-        <!-- anything -->
+        <!-- Anything -->
     </android.support.design.card.MaterialCardView>
 
 </android.support.design.widget.CoordinatorLayout>
@@ -97,14 +97,16 @@ fun <T : CoordinatorLayout.Behavior<*>> View.findBehavior(): T = layoutParams.ru
 val backdropBehavior: BackdropBehavior = foregroundContainer.findBehavior() // find behavior
 
 with(backdropBehavior) {
-        attachBackContainer(R.id.backContainer) // set back container
-        attachToolbar(R.id.toolbar) // set toolbar
+
+        // Attach your back layout to behavior.
+        // BackDropBehavior will find the toolbar itself.
+        attachBackLayout(R.id.backLayout)
         
-        // set navigation icons for toolbar
+        // Set navigation icons for toolbar
         setClosedIcon(R.drawable.ic_menu)
         setOpenedIcon(R.drawable.ic_close)
         
-        // add listener
+        // Add listener
         addOnDropListener(object : BackdropBehavior.OnDropListener {
             override fun onDrop(dropState: BackdropBehavior.DropState, fromUser: Boolean) {
                 // TODO: handle listener            
