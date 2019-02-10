@@ -8,7 +8,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import androidx.annotation.LayoutRes
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import com.squareup.picasso.Picasso
+import com.bumptech.glide.Glide
 
 
 fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false): View {
@@ -34,7 +34,7 @@ fun View.showKeyboard(show: Boolean) {
 fun ImageView.load(
     url: String?
 ) {
-    Picasso.get()
+    Glide.with(this)
         .load(url)
         .into(this)
 }
