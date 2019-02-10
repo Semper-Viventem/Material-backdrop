@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.annotation.IdRes
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import com.google.android.material.appbar.AppBarLayout
 
 
 class BackdropBehavior : CoordinatorLayout.Behavior<View> {
@@ -77,20 +76,23 @@ class BackdropBehavior : CoordinatorLayout.Behavior<View> {
     override fun onDependentViewChanged(parent: CoordinatorLayout, child: View, dependency: View): Boolean {
 
         this.frontLayout = child as? ViewGroup ?: throw IllegalArgumentException("BackLayout must extend a ViewGroup")
+
         when (dependency.id) {
-            toolbarId -> toolbar = dependency as? Toolbar
-                    ?: throw IllegalArgumentException("toolbarId doesn't match Toolbar")
+            toolbarId -> toolbar = dependency as? Toolbar ?: throw IllegalArgumentException("toolbarId doesn't match Toolbar")
 
             backLayoutId -> {
-                backLayout = dependency as? AppBarLayout
-                        ?: throw IllegalArgumentException("appBarLayoutId doesn't match AppBarLayout")
-                toolbar = utils.findToolbar(backLayout!!)
-                        ?: throw IllegalArgumentException("AppBarLayout mast contain a Toolbar!")
+                backLayout = dependency as? ViewGroup ?: throw IllegalArgumentException("backLayoutId doesn't match back Layout")
+
+                // TODO (next release): remove this conditional
+                if (toolbarId == null) {
+                    toolbar = utils.findToolbar(backLayout!!)
+                            ?: throw IllegalArgumentException("AppBarLayout mast contain a Toolbar!")
+                }
             }
         }
 
-        if (toolbar != null && frontLayout != null) {
-            initViews(parent, backLayout!!, toolbar!!, frontLayout!!)
+        if (toolbar != null && frontLayout != null && backLayout != null) {
+            initViews(parent, frontLayout!!, toolbar!!, backLayout!!)
         }
 
         return super.onDependentViewChanged(parent, child, dependency)
@@ -104,10 +106,6 @@ class BackdropBehavior : CoordinatorLayout.Behavior<View> {
         this.closedIconId = iconRes
     }
 
-    fun attachToolbar(@IdRes toolbarId: Int) {
-        this.toolbarId = toolbarId
-    }
-
     /**
      * Attach back layout to Backdrop.
      * BackDropLayout must contain a [Toolbar]
@@ -117,7 +115,14 @@ class BackdropBehavior : CoordinatorLayout.Behavior<View> {
     }
 
     /**
-     * @@deprecated — use [BackdropBehavior.attachBackLayout]
+     * @deprecated — use [BackdropBehavior.attachBackLayout]. This method will be removed in version 0.1.7+
+     */
+    fun attachToolbar(@IdRes toolbarId: Int) {
+        this.toolbarId = toolbarId
+    }
+
+    /**
+     * @deprecated — use [BackdropBehavior.attachBackLayout]. This method will be removed in version 0.1.7+
      */
     @Deprecated("Use BackdropBehavior.attachBackLayout")
     fun attachBackContainer(@IdRes backContainerId: Int) {
@@ -158,10 +163,15 @@ class BackdropBehavior : CoordinatorLayout.Behavior<View> {
         true
     }
 
-    private fun initViews(parent: CoordinatorLayout, backDropLayout: View, toolbar: Toolbar, backContainer: View) {
-        backContainer.y = toolbar.y + toolbar.height
-        backDropLayout.layoutParams.height = parent.height - toolbar.height
-        drawDropState(backDropLayout, toolbar, backContainer, false)
+    private fun initViews(parent: CoordinatorLayout, frontLayout: View, toolbar: Toolbar, backLayout: View) {
+
+        // TODO (next release): remove this conditional
+        if (toolbarId != null) {
+            backLayout.y = toolbar.y + toolbar.height
+        }
+
+        frontLayout.layoutParams.height = parent.height - (toolbar.y.toInt() + toolbar.height)
+        drawDropState(frontLayout, toolbar, backLayout, false)
 
         with(toolbar) {
             setNavigationOnClickListener {
@@ -169,7 +179,7 @@ class BackdropBehavior : CoordinatorLayout.Behavior<View> {
                     DropState.CLOSE -> DropState.OPEN
                     DropState.OPEN -> DropState.CLOSE
                 }
-                drawDropState(backDropLayout, toolbar, backContainer)
+                drawDropState(frontLayout, toolbar, backLayout)
                 notifyListeners(true)
             }
         }
