@@ -3,11 +3,11 @@ package ru.semper_viventem.backdrop
 import android.content.Context
 import android.os.Bundle
 import android.os.Parcelable
-import android.support.annotation.IdRes
-import android.support.design.widget.CoordinatorLayout
-import android.support.v7.widget.Toolbar
 import android.util.AttributeSet
 import android.view.View
+import androidx.annotation.IdRes
+import androidx.appcompat.widget.Toolbar
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 
 
 class BackdropBehavior : CoordinatorLayout.Behavior<View> {
