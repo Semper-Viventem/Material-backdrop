@@ -17,7 +17,7 @@ This library makes it easy to implement a [Backdrop](https://material.io/design/
 **JCenter (Recommended):**
 ```groovy
 dependencies {
-    implementation 'ru.semper-viventem.backdrop:backdrop:0.1.6'
+    implementation 'ru.semper-viventem.backdrop:backdrop:0.1.7'
 }
 ```
 
@@ -29,7 +29,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.Semper-Viventem:BackdropView:0.1.6'
+    implementation 'com.github.Semper-Viventem:BackdropView:0.1.7'
 }
 ```
 
