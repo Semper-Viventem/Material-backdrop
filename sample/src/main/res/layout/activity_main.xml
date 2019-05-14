@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:id="@+id/backDrop"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/backDrop"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
@@ -13,7 +13,8 @@
         android:id="@+id/backLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:elevation="0dp">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -25,9 +26,10 @@
             android:id="@+id/navigationView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="@dimen/small_gap"
-            android:paddingEnd="@dimen/small_gap"
             android:background="@android:color/transparent"
+            android:paddingEnd="@dimen/small_gap"
+            android:paddingStart="@dimen/small_gap"
+            app:elevation="0dp"
             app:itemBackground="@drawable/bg_menu_item"
             app:itemTextColor="@color/white"
             app:menu="@menu/main_menu"/>
